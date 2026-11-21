@@ -6,7 +6,9 @@ profil = {
 }
 riwayat = [
     {"hari": "senin", "jam_tidur": "21:00", "jam_bangun": "05:00"},
-    {"hari": "selasa", "jam_tidur": "22:00", "jam_bangun": "05:00"}
+    {"hari": "selasa", "jam_tidur": "22:00", "jam_bangun": "05:00"},
+    {"hari": "kamis", "jam_tidur": "21:00", "jam_bangun": "05:00"},
+    {"hari": "rabu", "jam_tidur": "22:00", "jam_bangun": "05:00"}
 ]
 
 def target(umur):
@@ -37,6 +39,43 @@ def formatjam(total_menit):
     if menit == 0:
         return f"{jam} jam"
     return f"{jam} jam {menit} menit"
+
+urutanhari = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"]
+
+def urut_hari(riwayat):
+    terurut = []
+    for i in urutanhari:
+        for data in riwayat:
+            if data["hari"].strip().capitalize() == i:
+                terurut.append(data)
+    print("\n=== Riwayat Tidur Terurut ===")
+    cetak_Riwayat(terurut)
+
+def searchRiwayat_tidur(riwayat):
+    searchday = input("Masukkan hari yang ingin dicari: ").lower()
+    if searchday not in urutanhari:
+        print("Hari tidak valid. Silakan masukkan hari yang benar.")
+        return
+    hasil = [data for data in riwayat if data["hari"].strip().lower() == searchday]
+    print(f"\n=== Hasil Pencarian Riwayat Tidur untuk '{searchday.capitalize()})===")
+    if not hasil:
+        print(f"Tidak ditemukan data riwayat tidur untuk hari {searchday.capitalize()}.")
+        return
+    cetak_Riwayat(hasil)   
+
+def cetak_Riwayat(riwayat):
+    for nomor, data in enumerate(riwayat, start=1):
+            menit = sleephour_minute(data["jam_tidur"], data ["jam_bangun"])
+            print(f"{nomor}. {data['hari']:<7} {data['jam_tidur']}-{data['jam_bangun']} {formatjam(menit)}")
+
+def show_Riwayat(riwayat):
+    print("\n=== Riwayat Tidur ===")
+    if not riwayat:
+        print("Belum ada data. Tambahkan data tidur terlebih dahulu.")
+        return 
+    for nomor, data in enumerate(riwayat, start=1):
+        menit = sleephour_minute(data["jam_tidur"], data ["jam_bangun"])
+        print(f"{nomor}. {data['hari']:<7} {data['jam_tidur']}-{data['jam_bangun']} {formatjam(menit)}")
 
 def analisis(rata_rata_menit, batas_min, batas_maks, kurang, jumlah_hari):
     min_menit = batas_min * 60
@@ -76,5 +115,7 @@ def show_analisis(profil,riwayat):
     kembali = input("Pilihan: ")
     # if kembali == "1":
     #     #Menu()
-show_analisis(profil, riwayat)
-
+# show_analisis(profil, riwayat)
+# show_Riwayat(riwayat)
+# searchRiwayat_tidur(riwayat)
+# urut_hari(riwayat)
