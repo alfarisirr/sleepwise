@@ -72,6 +72,9 @@ def show_analisis(profil,riwayat):
     print(f"Rata-rata tidur   : {formatjam(rata_rata)}")
     print(f"Hari kurang tidur : {kurang} dari {len(durasi)} hari")
     print(f"Status            : {status}")
-
+    print("Kembali? (ketik 1 untuk kembali ke menu utama)")
+    kembali = input("Pilihan: ")
+    # if kembali == "1":
+    #     #Menu()
 show_analisis(profil, riwayat)
 
