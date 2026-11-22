@@ -1,6 +1,120 @@
 #sleepwise
 #MENU
 from datetime import datetime
+data = {}
+#profil
+def tambah_profil():
+    nama = input("Masukkan nama profil baru:").strip()
+    if not nama:
+        print("Nama tidak boleh kosong.")
+        return
+    if nama in data["profil"]:
+        print("Nama profil sudah ada.")
+        return
+    try:
+        umur = int(input("Masukkan umur:").strip())
+        if umur <= 0:
+            raise ValueError
+    except ValueError:
+        print("Umur berupa angka positif.")
+    data["profil"][nama] = {"umur": umur, "riwayat": []}
+    if not data["aktif"]:
+        data["aktif"] = nama
+    save_data()
+    print(f"Profil '{nama}' berhasil ditambahkan.")
+
+def profil_aktif():
+    nama = data["aktif"]
+    if nama in data["profil"]:
+        return nama, data["profil"][nama]
+    if data["profil"]:
+        nama = next(iter(data["profil"]))
+        data["aktif"] = nama
+        return nama, data["profil"][nama]
+    return None, None
+
+def lihat_semua_profil():
+    print("\n=== SELURUH PROFIL ===")
+    if not data ["profil"]:
+        return
+    aktif = data["aktif"]
+    for nomor, (nama, p) in enumerate(data["profil"]. items(). start=1):
+        tanda = " (AKTIF)" if nama == aktif else ""
+        print(f"{nomor}. {nama} | {p['umur']} tahun | {len(p['riwayat'])} catatan{tanda}")
+
+def ganti_profil():
+    lihat_semua_profil()
+    if not data["profil"]:
+        return
+    pilihan = input("Pilih nomor profil yang ingin diaktifkan:"). strip()
+    try:
+        indeks = int(pilihan) - 1
+        nama = list(data["profil"])[indeks]
+    except (ValueError, IndexError):
+        print("Pilihan tidak valid.")
+        return
+    data["aktif"] = nama
+    save_data()
+    print(f"Profil aktif sekarang: {nama}")
+
+def ubah_profil():
+    lihat_semua_profil()
+    if not data["profil"]:
+        return
+    pilihan = input("Pilih nomor profil yang diubah: ").strip()
+    try:
+        indeks = int(pilihan) - 1
+        nama_lama = list(data["profil"])[indeks]
+    except (ValueError, IndexError):
+        print("Pilihan tidak valid.")
+        return
+    p = data["profil"][nama_lama]
+    nama = input(f"Nama [{nama_lama}]: ").strip() or nama_lama
+    try:
+        umur = int(input(f"umur [{p['umur']}]: ").strip() or p["umur"])
+        if umur <= 0:
+            raise ValueError
+    except ValueError:
+        print("Umur harus berupa angka positif.")
+        return
+    if nama != nama_lama:
+        if nama in data["profil"]:
+            print("Nama profil sudah dipakai.")
+            return
+        data["profil"][nama] = data["profil"].pop(nama_lama)
+        if data["aktif"] == nama_lama:
+            data["aktif"] = nama
+        p = data["profil"][nama]
+    p["umur"] = umur
+    save_data()
+    print("Profil berhasil diperbarui.")
+
+def profil_Menu():
+    while True:
+        print("\n=== MENU PROFIL ===")
+        print("1. Tambah profil baru")
+        print("2. Lihat semua profil")
+        print("3. Ganti profil aktif")
+        print("4. Ubah nama dan umur profil")
+        print("5. Kembali ke menu utama")  
+        pilihan = input("Pilih menu yang diinginkan: ").strip()
+        if pilihan == "1":
+            tambah_profil()
+        elif pilihan == "2":
+            lihat_semua_profil()
+        elif pilihan == "3":
+            ganti_profil_aktif()
+        elif pilihan == "4":
+            ubah_profil()
+        elif pilihan == "5":
+            return
+        else:
+            print("Pilihan tidak valid. Pilih antara 1-5.")
+if __name__ == "__main__":
+    load_data()
+    save_data() 
+    menu()
+
 #profil sementara
 profil = {
     "nama": "eha",
