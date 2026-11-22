@@ -1,0 +1,40 @@
+{
+  "aktif": "Jaktim",
+  "profil": {
+    "eha baru": {
+      "umur": 30,
+      "riwayat": [
+        {
+          "hari": "Senin",
+          "jam_tidur": "21:00",
+          "jam_bangun": "05:00"
+        },
+        {
+          "hari": "Selasa",
+          "jam_tidur": "22:00",
+          "jam_bangun": "05:00"
+        },
+        {
+          "hari": "Rabu",
+          "jam_tidur": "22:30",
+          "jam_bangun": "05:00"
+        },
+        {
+          "hari": "Rabu",
+          "jam_tidur": "03:00",
+          "jam_bangun": "04:00"
+        }
+      ]
+    },
+    "Jaktim": {
+      "umur": 15,
+      "riwayat": [
+        {
+          "hari": "Senin",
+          "jam_tidur": "23:00",
+          "jam_bangun": "06:00"
+        }
+      ]
+    }
+  }
+}
