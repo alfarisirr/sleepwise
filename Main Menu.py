@@ -442,7 +442,9 @@ def Menu():
         elif inputuser == "4":
             profil_Menu()
         elif inputuser == "5":
-            print("test)")
+            save_data()
+            print("Terima kasih telah menggunakan Sleepwise CLI. Adiossss!")
+            break   
         else:
             print("menu tidak tersedia pilih antara 1-5")
 

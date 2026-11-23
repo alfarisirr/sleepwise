@@ -38,6 +38,21 @@
           "hari": "Sabtu",
           "jam_tidur": "01:00",
           "jam_bangun": "08:00"
+        },
+        {
+          "hari": "Minggu",
+          "jam_tidur": "20:00",
+          "jam_bangun": "04:00"
+        },
+        {
+          "hari": "Jumaat",
+          "jam_tidur": "20:00",
+          "jam_bangun": "04:00"
+        },
+        {
+          "hari": "Senin",
+          "jam_tidur": "20:00",
+          "jam_bangun": "04:00"
         }
       ]
     },
