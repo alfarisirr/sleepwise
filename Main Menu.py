@@ -103,7 +103,7 @@ def lihat_semua_profil():
     if not data ["profil"]:
         return
     aktif = data["aktif"]
-    for nomor, (nama, p) in enumerate(data["profil"]. items(). start=1):
+    for nomor, (nama, p) in enumerate(data["profil"].items(), start=1):
         tanda = " (AKTIF)" if nama == aktif else ""
         print(f"{nomor}. {nama} | {p['umur']} tahun | {len(p['riwayat'])} catatan{tanda}")
 
@@ -168,17 +168,17 @@ def profil_Menu():
         elif pilihan == "2":
             lihat_semua_profil()
         elif pilihan == "3":
-            ganti_profil_aktif()
+            ganti_profil()
         elif pilihan == "4":
             ubah_profil()
         elif pilihan == "5":
             return
         else:
             print("Pilihan tidak valid. Pilih antara 1-5.")
-if __name__ == "__main__":
-    load_data()
-    save_data() 
-    menu()
+    if __name__ == "__main__":
+        load_data()
+        save_data() 
+        Menu()
 
 #profil sementara
 profil = {
