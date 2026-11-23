@@ -313,6 +313,7 @@ def formatjam(total_menit):
 urutanhari = ["senin", "selasa", "rabu", "kamis", "jumat", "sabtu", "minggu"]
 
 def urut_hari():
+    nama, p = profil_aktif()
     terurut = []
     for i in urutanhari:
         for data in p["riwayat"]:
@@ -330,12 +331,13 @@ def urut_hari():
     
 
 
-def searchRiwayat_tidur(riwayat):
+def searchRiwayat_tidur():
+    nama, p = profil_aktif()
     searchday = input("Masukkan hari yang ingin dicari: ").lower()
     if searchday not in urutanhari:
         print("Hari tidak valid. Silakan masukkan hari yang benar.")
         Menu()
-    hasil = [data for data in riwayat if data["hari"].strip().lower() == searchday]
+    hasil = [data for data in p["riwayat"] if data["hari"].strip().lower() == searchday]
     print(f"\n=== Hasil Pencarian Riwayat Tidur untuk '{searchday})===")
     if not hasil:
         print(f"Tidak ditemukan data riwayat tidur untuk hari {searchday}.")
@@ -369,7 +371,7 @@ def show_Riwayat():
     print('3. Kembali ke menu utama')
     user2 = input("Pilih menu yang diinginkan: ").capitalize()
     if user2 == "1":
-        searchRiwayat_tidur(p["riwayat"])
+        searchRiwayat_tidur()
     elif user2 == "2":
         urut_hari()
     elif user2 == "3":
