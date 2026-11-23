@@ -1,7 +1,72 @@
 #sleepwise
-#MENU
+
+
+import json
 from datetime import datetime
-data = {}
+from pathlib import Path
+
+DATA_FILE = Path(__file__).with_name("sleepwise_data.json")
+
+data = {}  
+
+
+# ==================== PENYIMPANAN JSONN ====================
+
+def load_data():
+    """Memuat data JSON. Format lama otomatis dimigrasikan."""
+    global data
+    if not DATA_FILE.exists():
+        data = {"aktif": "", "profil": {}}
+        return
+    try:
+        with DATA_FILE.open(encoding="utf-8") as file:
+            isi = json.load(file)
+    except (json.JSONDecodeError, OSError):
+        data = {"aktif": "", "profil": {}}
+        return
+
+    if "riwayat" in isi and isinstance(isi.get("profil"), dict) and "nama" in isi["profil"]:
+        # Format lama: {"profil": {"nama","umur"}, "riwayat": [...]}
+        p = isi["profil"]
+        nama = str(p.get("nama", "Profil Lama")).strip() or "Profil Lama"
+        umur = p.get("umur", 0)
+        try:
+            umur = int(umur)
+        except (TypeError, ValueError):
+            umur = 0
+        data = {
+            "aktif": nama,
+            "profil": {nama: {"umur": umur, "riwayat": isi.get("riwayat") or []}},
+        }
+        print(f"[Migrasi] Format JSON lama terdeteksi -> profil '{nama}' dibuat, "
+              f"{len(data['profil'][nama]['riwayat'])} catatan dipindahkan.")
+    elif isinstance(isi.get("profil"), dict):
+        # Format baru: {"aktif": nama, "profil": {nama: {"umur","riwayat"}}}
+        profil = {}
+        for nama, p in isi["profil"].items():
+            if isinstance(p, dict) and "riwayat" in p:
+                profil[nama] = p
+        data = {"aktif": isi.get("aktif", ""), "profil": profil}
+    else:
+        data = {"aktif": "", "profil": {}}
+
+
+def save_data():
+    with DATA_FILE.open("w", encoding="utf-8") as file:
+        json.dump(data, file, ensure_ascii=False, indent=2)
+
+
+def profil_aktif():
+    nama = data["aktif"]
+    if nama in data["profil"]:
+        return nama, data["profil"][nama]
+    if data["profil"]:
+        nama = next(iter(data["profil"]))
+        data["aktif"] = nama
+        return nama, data["profil"][nama]
+    return None, None
+
+#MENU
 #profil
 def tambah_profil():
     nama = input("Masukkan nama profil baru:").strip()
