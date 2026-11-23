@@ -175,16 +175,6 @@ def tambah_profil():
     save_data()
     print(f"Profil '{nama}' berhasil ditambahkan.")
 
-def profil_aktif():
-    nama = data["aktif"]
-    if nama in data["profil"]:
-        return nama, data["profil"][nama]
-    if data["profil"]:
-        nama = next(iter(data["profil"]))
-        data["aktif"] = nama
-        return nama, data["profil"][nama]
-    return None, None
-
 def lihat_semua_profil():
     print("\n=== SELURUH PROFIL ===")
     if not data ["profil"]:
