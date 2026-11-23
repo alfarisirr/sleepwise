@@ -312,10 +312,10 @@ def formatjam(total_menit):
 
 urutanhari = ["senin", "selasa", "rabu", "kamis", "jumat", "sabtu", "minggu"]
 
-def urut_hari(riwayat):
+def urut_hari():
     terurut = []
     for i in urutanhari:
-        for data in riwayat:
+        for data in p["riwayat"]:
             if data["hari"].strip().lower() == i.lower():
                 terurut.append(data)
     print("\n=== Riwayat Tidur Terurut ===")
@@ -356,23 +356,22 @@ def cetak_Riwayat(riwayat):
             menit = sleephour_minute(data["jam_tidur"], data ["jam_bangun"])
             print(f"{nomor}. {data['hari']:<7} {data['jam_tidur']}-{data['jam_bangun']} {formatjam(menit)}")
 
-def show_Riwayat(riwayat):
-    print("\n=== Riwayat Tidur ===")
-    if not riwayat:
+def show_Riwayat():
+    nama, p = profil_aktif()
+    print(f"\n=== Riwayat Tidur ({nama}) ===")
+    if not p or not p["riwayat"]:
         print("Belum ada data. Tambahkan data tidur terlebih dahulu.")
         return 
-    for nomor, data in enumerate(riwayat, start=1):
-        menit = sleephour_minute(data["jam_tidur"], data ["jam_bangun"])
-        print(f"{nomor}. {data['hari']:<7} {data['jam_tidur']}-{data['jam_bangun']} {formatjam(menit)}")
+    cetak_Riwayat(p["riwayat"])
     print("\n=== Menu Riwayat Tidur ===")
     print('1. Cari riwayat tidur berdasarkan hari')
     print('2. Urutkan riwayat tidur berdasarkan hari')
     print('3. Kembali ke menu utama')
     user2 = input("Pilih menu yang diinginkan: ").capitalize()
     if user2 == "1":
-        searchRiwayat_tidur(riwayat)
+        searchRiwayat_tidur(p["riwayat"])
     elif user2 == "2":
-        urut_hari(riwayat)
+        urut_hari()
     elif user2 == "3":
         Menu()
 
@@ -392,12 +391,17 @@ def analisis(rata_rata_menit, batas_min, batas_maks, kurang, jumlah_hari):
     else:
         return f"BELUM OPTIMAL, tercatat {kurang} dari {jumlah_hari} hari tidur di bawah batas yang dibutuhkan"
     
-def show_analisis(profil,riwayat):
-    print("\n=== ANALISIS ===")
+def show_analisis():
+    nama, p = profil_aktif()
+    print(f"\n=== ANALISIS ({nama}) ===")
+    if not p:
+        print("Belum ada profil aktif.")
+        return
+    riwayat = p["riwayat"]
     if not riwayat:
         print("Perlu ada minimal satu catatan tidur")
         return
-    batas_min, batas_maks = target(profil["umur"])
+    batas_min, batas_maks = target(p["umur"])
     batas = batas_min * 60
     durasi = [sleephour_minute(data["jam_tidur"], data["jam_bangun"]) for data in riwayat]
     total = sum(durasi)
@@ -405,7 +409,7 @@ def show_analisis(profil,riwayat):
     kurang = sum(1 for menit in durasi if menit < batas)
     status = analisis(rata_rata, batas_min, batas_maks, kurang, len(durasi))
 
-    print(f"Profil            : {profil['nama']} ({profil['umur']} tahun)")
+    print(f"Profil            : {nama} ({p['umur']} tahun)")
     print(f"Rekomendasi tidur : {batas_min}-{batas_maks} jam per malam")
     print(f"Rata-rata tidur   : {formatjam(rata_rata)}")
     print(f"Hari kurang tidur : {kurang} dari {len(durasi)} hari")
@@ -428,11 +432,11 @@ def Menu():
         inputuser = input("Pilih Menu yang Diinginkan: ").strip()
 
         if inputuser == "1":
-         show_Riwayat(riwayat)
+         show_Riwayat()
         elif inputuser == "2":
             menu_edit_riwayat()
         elif inputuser == "3":
-            show_analisis(profil, riwayat)
+            show_analisis()
         elif inputuser == "4":
             profil_Menu()
         elif inputuser == "5":
