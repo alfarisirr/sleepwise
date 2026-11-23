@@ -1,6 +1,3 @@
-#sleepwise
-
-
 import json
 from datetime import datetime
 from pathlib import Path
@@ -69,6 +66,25 @@ def profil_aktif():
 #MENU
 
 #Edit catatan tidur
+
+def tambah_tidur():
+    nama, p = profil_aktif()
+    if not p:
+        print("Belum ada profil aktif. Tambahkan profil terlebih dahulu.")
+        return
+    hari = input("Hari: ").strip().capitalize()
+    jam_tidur = input("Jam tidur (HH:MM): ").strip()
+    jam_bangun = input("Jam bangun (HH:MM): ").strip()
+    try:
+        sleephour_minute(jam_tidur, jam_bangun)
+    except ValueError:
+        print("Jam harus berformat HH:MM (00:00-23:59).")
+        return
+    p["riwayat"].append({"hari": hari, "jam_tidur": jam_tidur, "jam_bangun": jam_bangun})
+    save_data()
+    print("Catatan tidur berhasil ditambahkan.")
+
+
 def menu_edit_riwayat():
     while True:
         nama, p = profil_aktif()
@@ -96,7 +112,7 @@ def pilih_catatan(p, aksi):
         print("Belum ada catatan tidur untuk profil ini.")
         return None
     print(f"\nCatatan tidur ({data['aktif']}):")
-    cetak_riwayat(p["riwayat"])
+    cetak_Riwayat(p["riwayat"])
     pilihan = input(f"Pilih nomor catatan yang akan {aksi}: ").strip()
     try:
         indeks = int(pilihan) - 1
@@ -257,11 +273,6 @@ def profil_Menu():
         save_data() 
         Menu()
 
-#profil sementara
-profil = {
-    "nama": "eha",
-    "umur": 5
-}
 riwayat = [
     {"hari": "senin", "jam_tidur": "21:00", "jam_bangun": "05:00"},
     {"hari": "selasa", "jam_tidur": "22:00", "jam_bangun": "05:00"},
@@ -414,24 +425,30 @@ def show_analisis(profil,riwayat):
         print("Pilihan tidak valid. Kembali ke menu utama.")
         Menu()
 def Menu():
-    print("\n===== SLEEPWISE CLI =====")
-    print("1. Lihat Riwayat tidur")
-    print("2. Edit Riwayat Tidur")
-    print("3. Analisis Riwayat Tidur")
-    print("4. Ubah Profil")
-    print("5. keluar")
-    inputuser = input("Pilih Menu yang Diinginkan: ")
+    while True:
+        print("\n===== SLEEPWISE CLI =====")
+        print("1. Lihat Riwayat tidur")
+        print("2. Edit Riwayat Tidur")
+        print("3. Analisis Riwayat Tidur")
+        print("4. Ubah Profil")
+        print("5. keluar")
+        inputuser = input("Pilih Menu yang Diinginkan: ").strip()
 
-    if inputuser == "1":
-        show_Riwayat(riwayat)
-    elif inputuser == "2":
-        menu_edit_riwayat()
-    elif inputuser == "3":
-        show_analisis(profil, riwayat)
-    elif inputuser == "4":
-        profil_Menu()
-    elif inputuser == "5":
-        print("test)")
-    else:
-        print("menu tidak tersedia pilih antara 1-5")
-Menu()
+        if inputuser == "1":
+         show_Riwayat(riwayat)
+        elif inputuser == "2":
+            menu_edit_riwayat()
+        elif inputuser == "3":
+            show_analisis(profil, riwayat)
+        elif inputuser == "4":
+            profil_Menu()
+        elif inputuser == "5":
+            print("test)")
+        else:
+            print("menu tidak tersedia pilih antara 1-5")
+
+if __name__ == "__main__":
+    load_data()
+    save_data()  # migrasi format lama langsung tersimpan
+    Menu()
+
