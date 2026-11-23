@@ -266,10 +266,6 @@ def profil_Menu():
             return
         else:
             print("Pilihan tidak valid. Pilih antara 1-5.")
-    if __name__ == "__main__":
-        load_data()
-        save_data() 
-        Menu()
 
 
 def back(iniuser):
@@ -450,6 +446,6 @@ def Menu():
 
 if __name__ == "__main__":
     load_data()
-    save_data()  # migrasi format lama langsung tersimpan
+    save_data() 
     Menu()
 
