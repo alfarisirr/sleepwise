@@ -6,7 +6,6 @@ DATA_FILE = Path(__file__).with_name("sleepwise_data.json")
 
 data = {}  
 
-
 # ==================== PENYIMPANAN JSONN ====================
 
 def load_data():
@@ -23,7 +22,6 @@ def load_data():
         return
 
     if "riwayat" in isi and isinstance(isi.get("profil"), dict) and "nama" in isi["profil"]:
-        # Format lama: {"profil": {"nama","umur"}, "riwayat": [...]}
         p = isi["profil"]
         nama = str(p.get("nama", "Profil Lama")).strip() or "Profil Lama"
         umur = p.get("umur", 0)
@@ -273,12 +271,7 @@ def profil_Menu():
         save_data() 
         Menu()
 
-riwayat = [
-    {"hari": "senin", "jam_tidur": "21:00", "jam_bangun": "05:00"},
-    {"hari": "selasa", "jam_tidur": "22:00", "jam_bangun": "05:00"},
-    {"hari": "kamis", "jam_tidur": "21:00", "jam_bangun": "05:00"},
-    {"hari": "rabu", "jam_tidur": "22:00", "jam_bangun": "05:00"}
-]
+
 def back(iniuser):
     print("\nKembali ke menu utama? (ketik 1 untuk kembali ke menu utama)")
     iniuser = input("Pilihan: ")

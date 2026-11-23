@@ -1,4 +1,23 @@
 {
-  "aktif": "",
-  "profil": {}
+  "aktif": "eha",
+  "profil": {
+    "bob": {
+      "umur": 20,
+      "riwayat": []
+    },
+    "eha": {
+      "umur": 17,
+      "riwayat": [
+        {
+          "hari": "Senin",
+          "jam_tidur": "22:00",
+          "jam_bangun": "05:00"
+        }
+      ]
+    },
+    "HHH": {
+      "umur": 20,
+      "riwayat": []
+    }
+  }
 }
