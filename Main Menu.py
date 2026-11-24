@@ -212,6 +212,30 @@ def ganti_profil():
     data["aktif"] = nama
     save_data()
     print(f"Profil aktif sekarang: {nama}")
+def hapus_profil():
+    lihat_semua_profil()
+    if not data["profil"]:
+        print("Tidak ada profil untuk dihapus.")
+        return
+    pilihan = input("Pilih nomor profil yang ingin dihapus:").strip()
+    try:
+        indeks = int(pilihan) - 1
+        if indeks < 0:
+            raise IndexError
+        nama = list(data["profil"])[indeks]
+    except (ValueError, IndexError):
+        print("Pilihan tidak valid.")
+        return
+    p = data["profil"][nama]
+    yakin = input(f"Serius apus profil '{nama}' dengan {len(p['riwayat'])} catatan? (y/n): ").strip().lower()
+    if yakin == "y":
+        del data["profil"][nama]
+        if data["aktif"] == nama:
+            data["aktif"] = next(iter(data["profil"]), "")
+        save_data()
+        print(f"Profil '{nama}' berhasil dihapus.")
+    else:
+        print("Penghapusan dibatalkan.")
 
 def ubah_profil():
     lihat_semua_profil()
@@ -252,7 +276,8 @@ def profil_Menu():
         print("2. Lihat semua profil")
         print("3. Ganti profil aktif")
         print("4. Ubah nama dan umur profil")
-        print("5. Kembali ke menu utama")  
+        print("5. Hapus profil")
+        print("6. Kembali ke menu utama")  
         pilihan = input("Pilih menu yang diinginkan: ").strip()
         if pilihan == "1":
             tambah_profil()
@@ -263,9 +288,11 @@ def profil_Menu():
         elif pilihan == "4":
             ubah_profil()
         elif pilihan == "5":
+            hapus_profil()
+        elif pilihan == "6":
             return
         else:
-            print("Pilihan tidak valid. Pilih antara 1-5.")
+            print("Pilihan tidak valid. Pilih antara 1-6.")
 
 
 def back(iniuser):
@@ -440,7 +467,7 @@ def Menu():
         elif inputuser == "5":
             save_data()
             print("Terima kasih telah menggunakan Sleepwise CLI. Adiossss!")
-            break   
+            break
         else:
             print("menu tidak tersedia pilih antara 1-5")
 

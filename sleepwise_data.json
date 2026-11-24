@@ -1,75 +1,9 @@
 {
-  "aktif": "eha",
+  "aktif": "TIEH",
   "profil": {
-    "bob": {
-      "umur": 20,
-      "riwayat": [
-        {
-          "hari": "Senin",
-          "jam_tidur": "21:45",
-          "jam_bangun": "02:50"
-        }
-      ]
-    },
-    "eha": {
-      "umur": 17,
-      "riwayat": [
-        {
-          "hari": "Senin",
-          "jam_tidur": "22:00",
-          "jam_bangun": "05:00"
-        },
-        {
-          "hari": "Selasa",
-          "jam_tidur": "19:00",
-          "jam_bangun": "06:00"
-        },
-        {
-          "hari": "Kamis",
-          "jam_tidur": "22:00",
-          "jam_bangun": "06:00"
-        },
-        {
-          "hari": "Rabu",
-          "jam_tidur": "23:00",
-          "jam_bangun": "06:00"
-        },
-        {
-          "hari": "Sabtu",
-          "jam_tidur": "01:00",
-          "jam_bangun": "08:00"
-        },
-        {
-          "hari": "Minggu",
-          "jam_tidur": "20:00",
-          "jam_bangun": "04:00"
-        },
-        {
-          "hari": "Jumaat",
-          "jam_tidur": "20:00",
-          "jam_bangun": "04:00"
-        },
-        {
-          "hari": "Senin",
-          "jam_tidur": "20:00",
-          "jam_bangun": "04:00"
-        }
-      ]
-    },
-    "Rafa": {
-      "umur": 5,
-      "riwayat": [
-        {
-          "hari": "Senin",
-          "jam_tidur": "19:30",
-          "jam_bangun": "19:31"
-        },
-        {
-          "hari": "Selasa",
-          "jam_tidur": "19:30",
-          "jam_bangun": "21:30"
-        }
-      ]
+    "TIEH": {
+      "umur": 200,
+      "riwayat": []
     }
   }
 }
